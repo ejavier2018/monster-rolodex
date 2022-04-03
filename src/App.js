@@ -1,22 +1,29 @@
 import React, { Component } from "react";
 import "./App.css";
+import "./search-box.styles.css";
+import CardList from "./components/card-list/card-list.component";
+import SearchBox from "./components/search-box/search-box";
 
 class App extends Component {
   constructor() {
     super();
-    console.log("constructor");
+    //console.logs("constructor");
 
     this.state = {
-      monsters: [
-        { name: "Linda" },
-        { name: "Frank" },
-        { name: "Jacky" },
-        { name: "Andrei" },
-      ],
+      monsters: [],
       searchField: "",
-      filteredMonsters: [],
+      //filteredMonsters: [],
     };
   }
+
+  onSearchChange = (event) => {
+    console.log(event.target.value);
+    const searchField = event.target.value.toLocaleLowerCase();
+
+    this.setState(() => {
+      return { searchField };
+    });
+  };
 
   componentDidMount() {
     console.log("componentDidMount");
@@ -37,29 +44,38 @@ class App extends Component {
   render() {
     console.log("render");
 
-    const filteredMonsters = this.state.monsters.filter((monster) => {
-      return monster.name.toLocaleLowerCase().includes(this.state.searchField);
+    const { monsters, searchField } = this.state;
+    const { onSearchChange } = this;
+
+    const filteredMonsters = monsters.filter((monster) => {
+      return monster.name.toLocaleLowerCase().includes(searchField);
     });
 
     return (
       <div className="App">
+        <SearchBox
+          className="search-box"
+          onChangeHandler={onSearchChange}
+          placeholder={"Search Monster"}
+        />
+        {/*
         <input
           className="search-box"
           type="search"
           placeholder="Search Monster"
-          onChange={(event) => {
-            console.log(event.target.value);
-            const searchField = event.target.value.toLocaleLowerCase();
-
-            this.setState(() => {
-              return { searchField };
-            });
-          }}
+          onChange={onSearchChange}
         />
+    */}
 
-        {filteredMonsters.map((monster) => {
-          return <div key={monster.id}>{monster.name}</div>;
-        })}
+        {/*filteredMonsters.map((monster) => {
+          return (
+            <div key={monster.id}>
+              {monster.id}
+              {monster.name}
+            </div>
+          );
+        })*/}
+        <CardList monsters={filteredMonsters} />
       </div>
     );
   }
