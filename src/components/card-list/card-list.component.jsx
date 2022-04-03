@@ -1,7 +1,6 @@
 import { Component } from "react";
 import Card from "../card/card";
 import "./card-list.styles.css";
-import "./card.styles.css";
 
 class CardList extends Component {
   render() {

@@ -53,6 +53,7 @@ class App extends Component {
 
     return (
       <div className="App">
+        <div className="app-title">Monster Rolodex</div>
         <SearchBox
           className="search-box"
           onChangeHandler={onSearchChange}
